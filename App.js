@@ -7,54 +7,69 @@
  */
 
 import React, {Component} from 'react';
-import { Text, View} from 'react-native';
+import {  View} from 'react-native';
 import firebase from '@firebase/app';
-import {Header} from './src/components/common';
+import '@firebase/auth'
+import {Header,Button,Spinner} from './src/components/common';
 import LoginForm from './src/components/LoginForm'
 
 
 
 
- class App extends Component {
-// initializeFirebase() {
-//   const firebase = require("firebase");
+class App extends Component {
+  state = { loggedIn: null };
 
-//   // Initialize Firebase
-//   var config = {
-//     apiKey: "AIzaSyCqxLHIXuvnOoLct0ehN0-renat3cqexIk",
-//     authDomain: "authentication-304f2.firebaseapp.com",
-//     databaseURL: "https://authentication-304f2.firebaseio.com",
-//     projectId: "authentication-304f2",
-//     storageBucket: "authentication-304f2.appspot.com",
-//     messagingSenderId: "926587905674"
-//   };
-//   firebase.initializeApp(config);
+  componentWillMount() {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyCqxLHIXuvnOoLct0ehN0-renat3cqexIk',
+      authDomain: 'authentication-304f2.firebaseapp.com',
+      databaseURL: 'https://authentication-304f2.firebaseio.com',
+      projectId: 'authentication-304f2',
+      storageBucket: 'authentication-304f2.appspot.com',
+      messagingSenderId: '926587905674'
+    });
 
-//   //inicializando o firestore
-//   const firestore = require("firebase/firestore");
-//   db = firebase.firestore();
-//   db.settings({ timestampsInSnapshots: true });
-// }
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ loggedIn: true });
+      } else {
+        this.setState({ loggedIn: false });
+      }
+    });
+  }
 
-
- componentWillMount() {
-
-  firebase.initializeApp({
-    apiKey: 'AIzaSyCqxLHIXuvnOoLct0ehN0-renat3cqexIk',
-    authDomain: 'authentication-304f2.firebaseapp.com',
-    databaseURL: 'https://authentication-304f2.firebaseio.com',
-    projectId: 'authentication-304f2',
-    storageBucket: 'authentication-304f2.appspot.com',
-    messagingSenderId: '926587905674'
-  });
-
- }
+  renderContent() {
+    // switch (this.state.loggedIn) {
+    //   case true:
+    //     return (
+    //       <Button onPress={() => firebase.auth().signOut()}>
+    //         Log Out
+    //       </Button>
+    //     );
+    //   case false:
+    //     return <LoginForm />;
+    //   default:
+    //     return <Spinner size="large" />;
+    // }
+    switch (this.state.loggedIn) {
+      case true:
+        return (
+          <Button onPress={() => firebase.auth().signOut()}>
+            Log Out
+          </Button>
+        );
+      case false:
+        return <LoginForm />;
+      default:
+        return <Spinner size="large" />;
+    }
+  }
 
   render() {
     return (
       <View>
-        <Header headerText={'Welcome'}/>
-        <LoginForm/>
+        <Header headerText="Authentication" />
+        {this.renderContent()}
       </View>
     );
   }

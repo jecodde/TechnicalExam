@@ -1,101 +1,91 @@
-
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Text } from 'react-native';
-import firebase from '@firebase/app'
+import firebase from '@firebase/app';
 import '@firebase/auth'
-import {Button,Card,CardSection,Input,Spinner} from './common'
+import { Button, Card, CardSection, Input, Spinner } from './common';
 
+class LoginForm extends Component {
+  state = { email: '', password: '', error: '', loading: false };
 
- class LoginForm extends Component {
+  onButtonPress() {
+    const { email, password } = this.state;
 
-    state = {
-        email:'',
-        password:'',
-        loading:false,
-        error:''
-    };
+    this.setState({ error: '', loading: true });
 
-    onButtonPress(){
-        const {email,password} =this.state;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(this.onLoginSuccess.bind(this))
+      .catch(() => {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then(this.onLoginSuccess.bind(this))
+          .catch(this.onLoginFail.bind(this));
+      });
+  }
 
-        this.setState({err:'',loading:true});
+  onLoginFail() {
+    this.setState({ error: 'Authentication Failed', loading: false });
+  }
 
-        firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(this.onLoginSuccess.bind(this))
-        .catch(() => {
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                    .then(this.onLoginSuccess.bind(this))
-                    .catch(this.onLoginFail.bind(this ))
-            })
-    }
- 
-    onLoginFail(){
-        this.setState({error:'Authentication Failed',loading:false})
-    }
+  onLoginSuccess() {
+    this.setState({
+      email: '',
+      password: '',
+      loading: false,
+      error: ''
+    });
+  }
 
-    onLoginSuccess(){
-        this.setState({
-            email:'',
-            password:'',
-            loading:false,
-            err:''
-        });
+  renderButton() {
+    if (this.state.loading) {
+      return <Spinner size="small" />;
     }
 
-    renderButton(){
-        if(this.state.loading){
-            return <Spinner size="small" />
-        }
-
-        return(
-            <Button onPress={this.onButtonPress.bind(this)}/>
-        );
-    }
+    return (
+      <Button onPress={this.onButtonPress.bind(this)}>
+        Log in
+      </Button>
+    );
+  }
 
   render() {
     return (
-        <Card>
-            {/* Email Input */}
-            <CardSection>
-                <Input 
-                placeholder='user@gmail.com'
-                label ='email'
-                value={this.state.email}
-                onChangeText={text=> this.setState({email: text})}
-                />
-            </CardSection>
-          {/* Password Input */}
-            <CardSection>
-                <Input 
-                    secureTextEntry
-                    placeholder='password'
-                    label ='Password'
-                    value={this.state.password}
-                    onChangeText={text=> this.setState({password: text})}
-                />
-            </CardSection>
+      <Card>
+        <CardSection>
+          <Input
+            placeholder="user@gmail.com"
+            label="Email"
+            value={this.state.email}
+            onChangeText={email => this.setState({ email })}
+          />
+        </CardSection>
 
-            <Text style={styles.errorTextStyle}>
-                {this.state.error}
-            </Text>
+        <CardSection>
+          <Input
+            secureTextEntry
+            placeholder="password"
+            label="Password"
+            value={this.state.password}
+            onChangeText={password => this.setState({ password })}
+          />
+        </CardSection>
 
-            <CardSection>
-                {this.renderButton()}
-            </CardSection>
-        </Card>
+        <Text style={styles.errorTextStyle}>
+          {this.state.error}
+        </Text>
 
-
-    
-    )
+        <CardSection>
+          {this.renderButton()}
+        </CardSection>
+      </Card>
+    );
   }
 }
 
-const styles={
-    errorTextStyle:{
-        fontSize:20,
-        alignSelf:'center',
-        color:'red'
-    }
-}
+const styles = {
+  errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red'
+  }
+};
 
 export default LoginForm;
