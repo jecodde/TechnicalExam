@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, Alert} from 'react-native';
 import firebase from '@firebase/app';
 import '@firebase/auth'
-import { Button, Card, CardSection, Input, Spinner } from './common';
+import { Button, Card, CardSection, Input, Spinner ,Header} from './common';
 
 class LoginForm extends Component {
   state = { 
@@ -38,9 +38,7 @@ class LoginForm extends Component {
       this.setState({password : password, passwordRegError : false}) ;
     }
     
-    if(this.state.password<6){
-      Alert.alert('please use at least 6 - 12 characters')
-    }
+   
  
     //Input form email is empty
     if(email.trim() != 0){
@@ -100,7 +98,7 @@ class LoginForm extends Component {
 
     return (
       <Button onPress={this.onButtonPress.bind(this)}>
-        Log in
+        Sign in
       </Button>
     );
     //Text Entry
@@ -111,6 +109,9 @@ class LoginForm extends Component {
   render() {
     return (
       <Card>
+        <CardSection>
+          <Header/>
+        </CardSection>
         <CardSection>
           <Input
             placeholder="user@gmail.com"

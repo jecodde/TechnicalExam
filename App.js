@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {  View} from 'react-native';
+import {View} from 'react-native';
 import firebase from '@firebase/app';
 import '@firebase/auth'
 import {Header,Button,Spinner} from './src/components/common';
@@ -55,7 +55,7 @@ class App extends Component {
       case true:
         return (
           <Button onPress={() => firebase.auth().signOut()}>
-            Log Out
+            Sign out
           </Button>
         );
       case false:
@@ -68,7 +68,7 @@ class App extends Component {
   render() {
     return (
       <View>
-        <Header headerText="Authentication" />
+        {/* <Header headerText="Authentication" /> */}
         {this.renderContent()}
       </View>
     );
