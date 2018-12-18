@@ -16,8 +16,9 @@ import LoginForm from './src/components/LoginForm'
 
 
 
-class App extends Component {
+class App extends Component  {
   state = { loggedIn: null };
+  
 
   componentWillMount() {
     firebase.initializeApp({
