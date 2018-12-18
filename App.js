@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View,KeyboardAvoidingView,ScrollView } from 'react-native';
 import firebase from '@firebase/app';
 import '@firebase/auth'
 import {Header,Button,Spinner} from './src/components/common';
@@ -67,10 +67,14 @@ class App extends Component {
 
   render() {
     return (
-      <View>
+      <ScrollView>
+      <KeyboardAvoidingView   style = {{ flex: 1 }}  keyboardVerticalOffset = {Header.HEIGHT + 50} behavior="padding" enabled>
+     
         {/* <Header headerText="Authentication" /> */}
         {this.renderContent()}
-      </View>
+  
+      </KeyboardAvoidingView>
+      </ScrollView>
     );
   }
 }

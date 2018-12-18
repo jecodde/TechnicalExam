@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Alert} from 'react-native';
+import { Text, KeyboardAvoidingView} from 'react-native';
 import firebase from '@firebase/app';
 import '@firebase/auth'
 import { Button, Card, CardSection, Input, Spinner ,Header} from './common';
@@ -16,6 +16,8 @@ class LoginForm extends Component {
     passwordError:true,
     passwordRegError:true
   };
+
+  
 
   
 
@@ -108,6 +110,7 @@ class LoginForm extends Component {
 
   render() {
     return (
+     
       <Card>
         <CardSection>
           <Header/>
@@ -118,6 +121,7 @@ class LoginForm extends Component {
             label="Email"
             value={this.state.email}
             onChangeText={email  => this.setState({ email  })}
+            
           />
         </CardSection>
 
@@ -144,6 +148,7 @@ class LoginForm extends Component {
             label="Password"
             value={this.state.password}
             onChangeText={password => this.setState({ password})}
+            
           />
         </CardSection>
          {/* // Text Entry Error  */}
