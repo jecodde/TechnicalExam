@@ -1,7 +1,7 @@
-Programmin Exam
+Programming Exam
 ===============
-Email : bananaman_18@vananaz.com
-Password : password
+email : bananaman_18@vananaz.com
+password : password
 
 
 
