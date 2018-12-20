@@ -37,13 +37,8 @@ const styles = {
     fontSize: 20
   },
   logo: {
-    //flex:1,
-    height: 414,
-    width: 606,
-    alignItems: 'center',
-    justifyContent: 'center',
-   
-  
+    flex: 1,
+    resizeMode: 'contain',
     //resizeMode: 'stretch'
   }
 };

@@ -15,6 +15,7 @@ const Input = ({ label, value, onChangeText, placeholder, secureTextEntry,onChan
         value={value}
         onChangeText={onChangeText}
         onChange={onChange}
+        
       />
     </View>
   );
@@ -22,13 +23,14 @@ const Input = ({ label, value, onChangeText, placeholder, secureTextEntry,onChan
 
 const styles = {
   inputStyle: {
-    color: '#000',
+    color: 'black',
     paddingRight: 5,
     paddingLeft: 5,
     fontSize: 18,
     lineHeight: 23,
-    flex: 2,
-    borderColor:'#8533ff'
+    flex: 3,
+    borderColor:'#fff',
+    borderWidth:0.5
   },
   labelStyle: {
     fontSize: 18,
